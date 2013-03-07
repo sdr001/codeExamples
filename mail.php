@@ -182,7 +182,7 @@
 			</div>
 			<div data-theme="a" data-role="footer" data-position="fixed">
 				<h3>
-					www.midwestelitebasketball.com
+					www.midwestelitebasketball.com 
 				</h3>
 			</div>
 		</div>
