@@ -12,9 +12,6 @@
 		<link type="text/css" href="http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.min.css" rel="stylesheet" />
 		<link type="text/css" href="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.css" rel="stylesheet" />
 		<link type="text/css" href="http://dev.jtsage.com/jQM-DateBox2/css/demos.css" rel="stylesheet" />
-		<!-- NOTE: Script load order is significant! -->
-		<!-- LOAD LATER <script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script> -->
-		<!-- NOTE: CHAT APPLICATION -->
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.1.15.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
@@ -111,7 +108,6 @@
 					HealthAccess
 				</h2>
 			</div>
-			<!--End Header Div-->
 			<div data-role="content">
 				<img src="images/top-decor-right.png" alt="image" style="
 					margin-bottom: 0px;
@@ -123,7 +119,6 @@
 					<ul data-role="listview" name = "medsArea" id = "medsArea" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
 					</ul>
 				</div>
-				<!--End medDiv Div-->
 				<img src="images/top-decor-left.png" alt="image" style="
 					margin-bottom: 0px;
 					width: 60%;
@@ -131,28 +126,23 @@
 					max-width:460px;
 					" />
 			</div>
-			<!--End Content Div-->
 			<div style = "font-size:18pt;">
 				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
 				<div style="
 					margin-left: 40px; margin-right:5px;
 					">Our bodies are our gardens &#45; our wills are our gardeners.</div>
-				<!--End Div--><br />
+				<br />
 				<div style="
 					margin-left: 50px;
 					color: white;
 					">-William Shakespeare </div>
-				<!--End Header Div-->
 			</div>
-			<!--End Header Div-->
 			<div data-theme="c" data-role="footer" data-position="fixed">
 				<h3>
 					www.healthaccess.co
 				</h3>
 			</div>
-			<!--End Header Div-->
 		</div>
-		<!--End Header Div-->
 		<!--Chat Page -->
 		<div data-role="page" id="chatPage">
 			<div data-theme="c" data-role="header">
@@ -168,7 +158,6 @@
 					HealthAccess
 				</h2>
 			</div>
-			<!--End Header Div-->
 			<div data-role="content">
 				<img src="images/top-decor-right.png" alt="image" style="
 					margin-bottom: 0px;
@@ -180,7 +169,6 @@
 					<ul data-role="listview" name = "chatArea2" id = "chatArea2" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
 					</ul>
 				</div>
-				<!--End medDiv Div-->
 				<div id = "loadDiv">
 					<input id="call" name = "call" type="button" disabled="false" value="Loading..." />
 				</div>
@@ -191,28 +179,23 @@
 				<div id="pickup" id="pickup" style="display:none"><input id="pickup" type="button" value="pickup" /></div>
 				<div id="hangup" id="hangup" style="display:none"><input id="hangup" type="button" value="hangup" /></div>
 			</div>
-			<!--End Content Div-->
 			<div style = "font-size:18pt;">
 				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
 				<div style="
 					margin-left: 40px; margin-right:5px;
 					">Our bodies are our gardens &#45; our wills are our gardeners.</div>
-				<!--End Div--><br />
+				<br />
 				<div style="
 					margin-left: 50px;
 					color: white;
 					">-William Shakespeare </div>
-				<!--End Header Div-->
 			</div>
-			<!--End Header Div-->
 			<div data-theme="c" data-role="footer" data-position="fixed">
 				<h3>
 					www.healthaccess.co
 				</h3>
 			</div>
-			<!--End Header Div-->
 		</div>
-		<!--End Header Div-->
 		<div data-role="page" id="schedule">
 			<div data-theme="c" data-role="header">
 				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
@@ -231,7 +214,6 @@
 					<ul data-role="listview" name = "scheduleArea" id = "scheduleArea" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
 					</ul>
 				</div>
-				<!--End scheduleDiv Div-->
 				<ul data-role="listview" data-divider-theme="b" data-inset="true"style="margin-bottom: 0px;">
 					<li data-role="list-divider" role="heading">
 						Schedule an Appointment
@@ -274,7 +256,6 @@
 					<ul data-role="listview" name = "chatArea" id = "chatArea" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
 					</ul>
 				</div>
-				<!--End scheduleDiv Div-->
 			</div>
 			<div style = "font-size:18pt;">
 				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
@@ -291,7 +272,6 @@
 				</h3>
 			</div>
 		</div>
-		<!-- END CHAT --> 
 		<!-- Home -->
 		<div data-role="page" id="home">
 			<div data-theme="c" data-role="header">
@@ -595,12 +575,9 @@
         schedule.set("time", time);
         schedule.save(null, {
             success: function (schedule) {
-                //alert("did it");
             },
             error: function (schedule, error) {
-                alert("crapoooolaaa");
-                // The save failed.
-                // error is a Parse.Error with an error code and description.
+                alert("Error");
             }
         });
     };
@@ -625,8 +602,6 @@
                 var current = Parse.User.current();
                 var currentUser = current.getUsername();
                 var sip = currentUser + "SIP";
-                //alert("sipID HERE is " + sipID);
-                //alert("current User is " + currentUser);
                 var SIP = Parse.Object.extend(sip);
                 var query = new Parse.Query(SIP);
                 var i = 0;
@@ -674,10 +649,10 @@
 
             alert("call has been pressed");
             alert("with sipConnection being " + sipConnection);
-            var call = phono.phone.dial("app:9996187735", { // sip:chrismatthieu@proxy01.sipphone.com
+            var call = phono.phone.dial("app:9996187735", { 
                 onRing: function () {
                     $("#status").html("Ringing");
-                }, //end onRing
+                }, 
                 onAnswer: function () {
                     $("#status").html("Answered");
                     $("#hangup").show();
@@ -731,8 +706,6 @@
                 // The object was retrieved successfully.
                 Class.save(null, {
                     success: function (Class) {
-                        // Now let's update it with some new data. In this case, only cheatMode and score
-                        // will get sent to the cloud. playerName hasn't changed.
                         Class.set("sipAd", sipID);
                         Class.save();
                         alert("saved");
@@ -741,8 +714,6 @@
                 });
             },
             error: function (object, error) {
-                // The object was not retrieved successfully.
-                // error is a Parse.Error with an error code and description.
                 alert("Error2: " + error.code + " " + error.message);
             }
         });
@@ -830,7 +801,7 @@
 
         }); //end find
 
-    }); //end functions medicaitons ready
+    }); //end function
     $('#scheduleScreen').click(function () {
         Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
         var current = Parse.User.current();
@@ -861,7 +832,7 @@
             } //end error
 
         }); //end find
-    }); //end functions schedule ready
+    }); //end function
 </script>
 </body>
 </html>
