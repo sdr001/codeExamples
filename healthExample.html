@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+		</title>
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" href="my.css" />
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+		<link type="text/css" href="http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.min.css" rel="stylesheet" />
+		<link type="text/css" href="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.css" rel="stylesheet" />
+		<link type="text/css" href="http://dev.jtsage.com/jQM-DateBox2/css/demos.css" rel="stylesheet" />
+		<!-- NOTE: Script load order is significant! -->
+		<!-- LOAD LATER <script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script> -->
+		<!-- NOTE: CHAT APPLICATION -->
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.1.15.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		<script src="my.js"></script>
+		<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script src="http://s.phono.com/releases/0.1/jquery.phono.js"></script>
+		<style>
+			/* App custom styles */
+			html *
+			{
+			font-family: 'Rokkitt', serif !important;
+			}
+			#page1,#login,#home,#register,#medications,#schedule,#chat,#chatPage{
+			background: url(images/body-bg-2.png) repeat;
+			min-height: 100%;
+			width: 100%;
+			}
+			.ui-bar-b {
+			border: 1px solid #267026;
+			background: #006500;
+			color: white;
+			font-weight: bold;
+			text-shadow: 0 1px 1px black;
+			background-image: -webkit-gradient(linear,left top,left bottom,from( #006500 ),to( #007E00 ));
+			background-image: -webkit-linear-gradient( #006500,#007E00);
+			background-image: -moz-linear-gradient( #006500,#007E00 );
+			background-image: -ms-linear-gradient( #006500,#007E00 );
+			background-image: -o-linear-gradient( #006500,#007E00 );
+			background-image: linear-gradient( #006500,#007E00 );
+			}
+			.ui-btn-inner {
+			font-size: 20px;
+			}
+			.ui-li-divider {
+			font-size: 21px;
+			font-style: italic;
+			}
+			label.ui-input-text {
+			font-size: 20px;
+			}
+			.ui-body-c, .ui-overlay-c {
+			color: #006500;
+			text-shadow: none;
+			}
+		</style>
+	</head>
+	<body onLoad = "Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');">
+		<!-- Splash Screen -->
+		<div data-role="page" id="page1">
+			<div data-role="content">
+				<div align = "center">
+					<img src="images/healthLogoMaroon.png" alt="image" style="" />
+				</div>
+				<img src="images/top-decor-right.png" alt="image" style="
+					padding-top: 10px;
+					margin-bottom: -5px;
+					width: 60%;
+					padding-left: 40%;
+					" />
+				<img src="images/main.png" alt="image" style="
+					margin-bottom: -5px;
+					width: 100%;
+					" />
+				<img src="images/top-decor-left.png" alt="image" style="
+					margin-bottom: 10px;
+					width: 60%;
+					padding-left: 0%;
+					" />
+				<a data-role="button" onClick="currentUser();">
+				Login
+				</a>
+				<a data-role="button" href="#register">
+				Register
+				</a>
+			</div>
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+		</div>
+		<!-- Medications -->
+		<div data-role="page" id="medications">
+			<div data-theme="c" data-role="header">
+				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
+				Log Out
+				</a>
+				<a data-role="button" id ="medsBack" href="" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+				Back
+				</a>
+				<h2 style="
+					font-size: 16pt;
+					">
+					HealthAccess
+				</h2>
+			</div>
+			<!--End Header Div-->
+			<div data-role="content">
+				<img src="images/top-decor-right.png" alt="image" style="
+					margin-bottom: 0px;
+					width: 60%;
+					padding-left: 37%;
+					max-width:460px;
+					" />
+				<div id = "medDiv">
+					<ul data-role="listview" name = "medsArea" id = "medsArea" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
+					</ul>
+				</div>
+				<!--End medDiv Div-->
+				<img src="images/top-decor-left.png" alt="image" style="
+					margin-bottom: 0px;
+					width: 60%;
+					padding-left: 3%;
+					max-width:460px;
+					" />
+			</div>
+			<!--End Content Div-->
+			<div style = "font-size:18pt;">
+				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
+				<div style="
+					margin-left: 40px; margin-right:5px;
+					">Our bodies are our gardens &#45; our wills are our gardeners.</div>
+				<!--End Div--><br />
+				<div style="
+					margin-left: 50px;
+					color: white;
+					">-William Shakespeare </div>
+				<!--End Header Div-->
+			</div>
+			<!--End Header Div-->
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+			<!--End Header Div-->
+		</div>
+		<!--End Header Div-->
+		<!--Chat Page -->
+		<div data-role="page" id="chatPage">
+			<div data-theme="c" data-role="header">
+				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
+				Log Out
+				</a>
+				<a data-role="button" id ="medsBack" href="" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+				Back
+				</a>
+				<h2 style="
+					font-size: 16pt;
+					">
+					HealthAccess
+				</h2>
+			</div>
+			<!--End Header Div-->
+			<div data-role="content">
+				<img src="images/top-decor-right.png" alt="image" style="
+					margin-bottom: 0px;
+					width: 60%;
+					padding-left: 37%;
+					max-width:460px;
+					" />
+				<div id = "chatDiv2">
+					<ul data-role="listview" name = "chatArea2" id = "chatArea2" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
+					</ul>
+				</div>
+				<!--End medDiv Div-->
+				<div id = "loadDiv">
+					<input id="call" name = "call" type="button" disabled="false" value="Loading..." />
+				</div>
+				<div id = "callDiv" style="display:none">
+					<input id="call" name = "call" type="button" value="Chat" />
+				</div>
+				<span id="status"></span>
+				<div id="pickup" id="pickup" style="display:none"><input id="pickup" type="button" value="pickup" /></div>
+				<div id="hangup" id="hangup" style="display:none"><input id="hangup" type="button" value="hangup" /></div>
+			</div>
+			<!--End Content Div-->
+			<div style = "font-size:18pt;">
+				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
+				<div style="
+					margin-left: 40px; margin-right:5px;
+					">Our bodies are our gardens &#45; our wills are our gardeners.</div>
+				<!--End Div--><br />
+				<div style="
+					margin-left: 50px;
+					color: white;
+					">-William Shakespeare </div>
+				<!--End Header Div-->
+			</div>
+			<!--End Header Div-->
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+			<!--End Header Div-->
+		</div>
+		<!--End Header Div-->
+		<div data-role="page" id="schedule">
+			<div data-theme="c" data-role="header">
+				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
+				Log Out
+				</a>
+				<a data-role="button"  id="scheduleBack" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+				Back
+				</a>
+				<h2 style="font-size: 16pt;">
+					Schedule
+				</h2>
+			</div>
+			<div data-role="content">
+				<img src="images/top-decor-right.png" alt="image" style="margin-bottom: 0px;width: 60%;padding-left: 37%; max-width:460px;" />
+				<div id = "scheduleDiv">
+					<ul data-role="listview" name = "scheduleArea" id = "scheduleArea" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
+					</ul>
+				</div>
+				<!--End scheduleDiv Div-->
+				<ul data-role="listview" data-divider-theme="b" data-inset="true"style="margin-bottom: 0px;">
+					<li data-role="list-divider" role="heading">
+						Schedule an Appointment
+					</li>
+				</ul>
+				<a data-role="button" onClick="scheduleAppt2();">
+				Click Here
+				</a>
+			</div>
+			<div style = "font-size:18pt;">
+				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
+				<div style="margin-left: 40px; margin-right:5px;">
+					Our bodies are our gardens &#45; our wills are our gardeners.
+				</div>
+				<br /> 
+				<div style="margin-left: 50px;color: white;">-William Shakespeare 
+				</div>
+			</div>
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+		</div>
+		<div data-role="page" id="chat">
+			<div data-theme="c" data-role="header">
+				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
+				Log Out
+				</a>
+				<a data-role="button"  id="scheduleBack" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+				Back
+				</a>
+				<h2 style="font-size: 16pt;">
+					Schedule
+				</h2>
+			</div>
+			<div data-role="content">
+				<img src="images/top-decor-right.png" alt="image" style="margin-bottom: 0px;width: 60%;padding-left: 37%; max-width:460px;" />
+				<div id = "chatDiv">
+					<ul data-role="listview" name = "chatArea" id = "chatArea" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
+					</ul>
+				</div>
+				<!--End scheduleDiv Div-->
+			</div>
+			<div style = "font-size:18pt;">
+				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
+				<div style="margin-left: 40px; margin-right:5px;">
+					Our bodies are our gardens &#45; our wills are our gardeners.
+				</div>
+				<br /> 
+				<div style="margin-left: 50px;color: white;">-William Shakespeare 
+				</div>
+			</div>
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+		</div>
+		<!-- END CHAT --> 
+		<!-- Home -->
+		<div data-role="page" id="home">
+			<div data-theme="c" data-role="header">
+				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
+				Log Out
+				</a>
+				<a data-role="button" href="javascript:history.go(-1)" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+				Back
+				</a>
+				<h2 style="
+					font-size: 16pt;
+					">
+					HealthAccess
+				</h2>
+			</div>
+			<div data-role="content">
+				<img src="images/top-decor-right.png" alt="image" style="
+					margin-bottom: 0px;
+					width: 60%;
+					padding-left: 37%;
+					max-width:460px;
+					" />
+				<ul data-role="listview" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
+					<li data-role="list-divider" role="heading">
+						Home
+					</li>
+					<li data-theme="c">
+						<a href="#medications" name ="meds" id ="meds" data-transition="slide">
+						Medications
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#page1" data-transition="slide">
+						History
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#page1" data-transition="slide">
+						Records
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#schedule" name = "schedule" id = "scheduleScreen" data-transition="slide">
+						Schedule
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#chat" name = "chatScreen" id = "chatScreen" data-transition="slide">
+						Chat with Your Doctor
+						</a>
+					</li>
+				</ul>
+				<img src="images/top-decor-left.png" alt="image" style="
+					margin-bottom: 0px;
+					width: 60%;
+					padding-left: 3%;
+					max-width:460px;
+					" />
+			</div>
+			<div style = "font-size:18pt;">
+				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
+				<div style="
+					margin-left: 40px; margin-right:5px;
+					">Our bodies are our gardens &#45; our wills are our gardeners.</div>
+				<br /> 
+				<div style="
+					margin-left: 50px;
+					color: white;
+					">-William Shakespeare </div>
+			</div>
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+		</div>
+		<!-- History -->
+		<div data-role="page" id="history">
+			<div data-theme="c" data-role="header">
+				<a data-role="button" onClick="logout();" data-icon="grid" data-iconpos="left" class="ui-btn-right">
+				Log Out
+				</a>
+				<a data-role="button" href="javascript:history.go(-1)" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+				Back
+				</a>
+				<h2 style="
+					font-size: 16pt;
+					">
+					HealthAccess
+				</h2>
+			</div>
+			<div data-role="content">
+				<img src="images/top-decor-right.png" alt="image" style="
+					margin-bottom: 0px;
+					width: 60%;
+					padding-left: 37%;
+					" />
+				<ul data-role="listview" data-divider-theme="b" data-inset="true"style="margin-top: -10px; margin-bottom: 0px;">
+					<li data-role="list-divider" role="heading">
+						History
+					</li>
+					<li data-theme="c">
+						<a href="#" data-transition="slide">
+						Medications
+						</a>
+					</li>
+				</ul>
+				<img src="images/top-decor-left.png" alt="image" style="margin-bottom: 0px;width: 60%;padding-left: 3%;" />
+			</div>
+			<div style = "font-size:18pt;">
+				<img src="images/quote.png" alt="image" style = "padding-left:30px; padding-right: 15px;" />
+				<div style="
+					margin-left: 40px; margin-right:5px;">
+					Our bodies are our gardens &#45; our wills are our gardeners.
+				</div>
+				<br /> 
+				<div style="margin-left: 50px; color: white;">-William Shakespeare </div>
+			</div>
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+		</div>
+		<!-- Login -->
+		<div data-role="page" id="login">
+			<div data-role="content">
+				<div align = "center">
+					<img src="images/healthLogoMaroon.png" alt="image" style="" />
+				</div>
+				<form action="">
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="textinput1">
+							</label>
+							<input name="username" id="username" placeholder="Username" value="" type="text" style="font-style: italic;"  />
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="textinput2">
+							</label>
+							<input name="password" id="password" placeholder="Password" value="" type="password" style="font-style: italic;" />
+						</fieldset>
+					</div>
+				</form>
+				<a data-role="button" onClick="login();">
+				Submit
+				</a>
+			</div>
+			<script>
+				function login(){
+				  
+				Parse.User.logIn(document.getElementById("username").value, document.getElementById("password").value, {
+				success: function(user) {
+				  window.location = '#home'
+				},
+				error: function(user, error) {
+				  alert("nope");
+				}
+				});
+				};
+			</script>       
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.healthaccess.co
+				</h3>
+			</div>
+		</div>
+		<!-- Register -->
+		<div data-role="page" id="register">
+			<div data-role="content">
+				<div align = "center">
+					<img src="images/healthLogoMaroon.png" alt="image" style="" />
+				</div>
+				<form action="">
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="textinput1">
+							</label>
+							<input name="username1" id="username1" placeholder="Username" value="" type="text" style="font-style: italic;"  />
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="textinput2">
+							</label>
+							<input name="password1" id="password1" placeholder="Password" value="" type="password" style="font-style: italic;" />
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="textinput2">
+							</label>
+							<input name="email" id="email" placeholder="Email" value="" type="email" style="font-style: italic;" />
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<label for="textinput2">
+							</label>
+							<input name="address" id="address" placeholder="Address" value="" type="text" style="font-style: italic;" />
+						</fieldset>
+					</div>
+				</form>
+				<a data-role="button"  onClick="register();">
+				Submit
+				</a>
+			</div>
+			<div data-theme="c" data-role="footer" data-position="fixed">
+				<h3>
+					www.heatlhaccess.co
+				</h3>
+			</div>
+<script>
+    $('#chatScreen').click(function () {
+        Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
+        var current = Parse.User.current();
+        var currentUser = current.getUsername();
+        var Friends = "Friends";
+        var Classes = Parse.Object.extend(Friends);
+        var query = new Parse.Query(Classes);
+        query.equalTo(currentUser);
+        var i = 0;
+        query.find({
+            success: function (results) {
+                $("#chatDiv ul").append('<li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-b ui-corner-top ui-first-child">Chat with Doctor</li>');
+                for (i = 0; i < results.length; i++) {
+                    var temp = results[i].get("d_id");
+                    if (results.length == 1) {
+                        $("#chatDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-li-last ui-li-static ui-last-child ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a onClick="test(); "value = "' + temp + '" name = "temp123" id = "temp123" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+
+                    } else {
+                        if (i == results.length - 1) {
+                            $("#chatDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-li-last ui-li-static ui-last-child ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a onClick="test();"value = "' + temp + '" name = "temp123" id = "temp123" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        } else {
+                            $("#chatDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a onClick="test();"value = "' + temp + '" name = "temp123" id = "temp123" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        }
+                    }
+                } //end for
+            }, //end success
+            error: function (error) {
+                alert("Error1: " + error.code + " " + error.message);
+            } //end error
+
+        }); //end find
+    }); //end function
+    function register() {
+        var user = new Parse.User();
+        var username = document.getElementById("username1").value;
+        var password = document.getElementById("password1").value;
+        var email = document.getElementById("email").value;
+        var address = document.getElementById("address").value;
+        user.set("username", username);
+        user.set("password", password);
+        user.set("address", address);
+        user.set("email", email);
+        user.signUp(null, {
+            success: function (user) {
+                alert("DONE");
+            },
+            error: function (user, error) {
+                // Show the error message somewhere and let the user try again.
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+        var Medications = "Medications" + username;
+        alert(Medications);
+        Medications = Parse.Object.extend(Medications);
+        var medications = new Medications();
+
+        medications.set("type", "");
+        medications.set("name", "");
+
+        medications.save(null, {
+            success: function (medications) {},
+            error: function (medications, error) {}
+        });
+    };
+</script>     
+		</div>
+		<script>
+    var sipID = " ";
+    var sipObject = " ";
+    var sipConnection = " ";
+    var tempDoc = document.getElementById('temp123').text;
+
+
+
+    function scheduleAnApt() {
+        Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
+
+        var current = Parse.User.current();
+        var currentUser = current.getUsername();
+        var Schedule = "Schedule" + currentUser;
+        var day = document.getElementById("mydate").value;
+        var time = document.getElementById("mytime").value;
+        Schedule = Parse.Object.extend(Schedule);
+        var schedule = new Schedule();
+        schedule.set("day", day);
+        schedule.set("time", time);
+        schedule.save(null, {
+            success: function (schedule) {
+                //alert("did it");
+            },
+            error: function (schedule, error) {
+                alert("crapoooolaaa");
+                // The save failed.
+                // error is a Parse.Error with an error code and description.
+            }
+        });
+    };
+
+    var uid = "";
+
+    function test() {
+
+        Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
+
+        window.location = '#chatPage'
+        var tempDoc = document.getElementById('temp123').text;
+
+        $("#chatDiv2 ul").append('<li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-b ui-corner-top ui-first-child">Chat with Doctor ' + tempDoc + '</li>');
+
+
+        var phono = $.phono({
+            apiKey: "e9f09519ed2799778bd32d349fbc093a",
+            onReady: function () {
+                sipID = "sip:" + this.sessionId;
+                alert("here" + sipID);
+                var current = Parse.User.current();
+                var currentUser = current.getUsername();
+                var sip = currentUser + "SIP";
+                //alert("sipID HERE is " + sipID);
+                //alert("current User is " + currentUser);
+                var SIP = Parse.Object.extend(sip);
+                var query = new Parse.Query(SIP);
+                var i = 0;
+                query.find({
+                    success: function (results) {
+                        sipObject = results[0].id;
+                        alert("sipObject is " + sipObject);
+                        number2(sipID);
+                    }, //end success
+                    error: function (error) {
+                        alert("Error1: " + error.code + " " + error.message);
+                    } //end error
+                }); //end Query OBJECT find
+
+
+
+
+            }, //onReady
+            phone: {
+                onIncomingCall: function (event) {
+                    var call = event.call;
+                    // alert("Incoming call");  
+                    $("#pickup").show();
+                    $("#status").html("Incoming call");
+                    $("#pickup").click(function () {
+                        $("#status").html("answered");
+                        call.answer();
+                        $("#pickup").hide();
+                        $("#hangup").show();
+                    });
+                    $("#hangup").click(function () {
+                        $("#status").html("hungup");
+                        call.hangup();
+                        $("#hangup").hide();
+                    });
+                }
+            }
+        });
+
+
+        $("#callDiv").click(function () {
+
+
+            $("#call").attr("disabled", true).val("Busy");
+
+            alert("call has been pressed");
+            alert("with sipConnection being " + sipConnection);
+            var call = phono.phone.dial("app:9996187735", { // sip:chrismatthieu@proxy01.sipphone.com
+                onRing: function () {
+                    $("#status").html("Ringing");
+                }, //end onRing
+                onAnswer: function () {
+                    $("#status").html("Answered");
+                    $("#hangup").show();
+                    $("#hangup").click(function () {
+                        $("#status").html("hungup");
+                        call.hangup();
+                        $("#hangup").hide();
+                    });
+                },
+                onHangup: function () {
+                    $("#call").attr("disabled", false).val("Call");
+                    $("#status").html("Hungup");
+                }
+            });
+        });
+
+
+    }
+    //App custom javascript
+    function logout() {
+
+        Parse.User.logOut();
+        window.location = '#page1'
+
+    };
+
+    function currentUser() {
+
+        var currentUser = Parse.User.current();
+        if (currentUser) {
+            window.location = '#home'
+        } else {
+            window.location = '#login'
+        }
+
+    };
+
+    function number2(sipID) {
+        Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
+
+        var current = Parse.User.current();
+        var currentUser = current.getUsername();
+        var sip = currentUser + "SIP";
+
+
+        var Class = Parse.Object.extend(sip);
+        var query = new Parse.Query(Class);
+        alert("WIth sip " + sipID);
+        query.get(sipObject, {
+            success: function (Class) {
+                // The object was retrieved successfully.
+                Class.save(null, {
+                    success: function (Class) {
+                        // Now let's update it with some new data. In this case, only cheatMode and score
+                        // will get sent to the cloud. playerName hasn't changed.
+                        Class.set("sipAd", sipID);
+                        Class.save();
+                        alert("saved");
+                        number3(sipID);
+                    }
+                });
+            },
+            error: function (object, error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and description.
+                alert("Error2: " + error.code + " " + error.message);
+            }
+        });
+
+    };
+
+    function number3(sipID) {
+        var tempDoc = document.getElementById('temp123').text;
+
+        var current = Parse.User.current();
+        var currentUser = current.getUsername();
+        var sip = currentUser + "SIP";
+
+        var getAddress = tempDoc + "SIP";
+        var SIP = Parse.Object.extend(getAddress);
+        var query = new Parse.Query(SIP);
+        var i = 0;
+        alert("temp doctor is " + getAddress);
+        query.find({
+            success: function (results) {
+                sipConnection = results[0].get("sipAd");
+                //alert(sipConnection);
+                $("#loadDiv").hide();
+                $("#callDiv").show();
+                alert("sipC" + sipConnection);
+            }, //end success
+            error: function (error) {
+                alert("Error3: " + error.code + " " + error.message);
+            } //end error
+
+        }); //end find
+
+    };
+</script>
+<script>
+    function scheduleAppt2() {
+
+        $('#scheduleArea').empty();
+        window.location = 'schedule.html'
+    };
+    $('#medsBack').click(function () {
+
+        $('#medsArea').empty();
+        window.location = 'javascript:history.go(-1)'
+
+    });
+
+    $('#scheduleBack').click(function () {
+
+        $('#scheduleArea').empty();
+        window.location = 'javascript:history.go(-1)'
+
+    });
+    $('#meds').click(function () {
+        Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
+        var current = Parse.User.current();
+        var currentUser = current.getUsername();
+        var Medications = "Medications" + currentUser;
+        var Classes = Parse.Object.extend(Medications);
+        var query = new Parse.Query(Classes);
+        var i = 0;
+        query.find({
+            success: function (results) {
+                $to = $("select[name='to']");
+                $("#medDiv ul").append('<li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-b ui-corner-top">Medications</li>');
+                for (i = 0; i < results.length; i++) {
+
+                    var temp = results[i].get("name");
+
+                    if (results.length == 1) {
+                        $("#medDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-li-last ui-li-static ui-last-child ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a href="#" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+
+                    } else {
+                        if (i == results.length - 1) {
+                            $("#medDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-li-last ui-li-static ui-last-child ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a href="#" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        } else {
+                            $("#medDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a href="#" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        }
+                    }
+                } //end for
+            }, //end success
+            error: function (error) {
+                alert("Error1: " + error.code + " " + error.message);
+            } //end error
+
+        }); //end find
+
+    }); //end functions medicaitons ready
+    $('#scheduleScreen').click(function () {
+        Parse.initialize('AguuZQYJHKqb004tEOfySx97OGLMNLrAm397kE3F', 'IVLFXIzwkoxfNArVPbw5cYSaWfjFZGUKVluD3Ee2');
+        var current = Parse.User.current();
+        var currentUser = current.getUsername();
+        var Schedule = "Schedule" + currentUser;
+        var Classes = Parse.Object.extend(Schedule);
+        var query = new Parse.Query(Classes);
+        var i = 0;
+        query.find({
+            success: function (results) {
+                $("#scheduleDiv ul").append('<li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-b ui-corner-top ui-first-child">Your Schedule</li>');
+                for (i = 0; i < results.length; i++) {
+                    var temp = results[i].get("time") + " on " + results[i].get("day");
+                    if (results.length == 1) {
+                        $("#scheduleDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-li-last ui-li-static ui-last-child ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a href="#" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+
+                    } else {
+                        if (i == results.length - 1) {
+                            $("#scheduleDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-li-last ui-li-static ui-last-child ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a href="#" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        } else {
+                            $("#scheduleDiv ul").append('<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow"true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" class ="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-inner ui-li ui-li-static ui-btn-up-c"><div class = "ui-btn-text"><a href="#" data-transition="slide" class="ui-link-inherit">' + temp + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        }
+                    }
+                } //end for
+            }, //end success
+            error: function (error) {
+                alert("Error1: " + error.code + " " + error.message);
+            } //end error
+
+        }); //end find
+    }); //end functions schedule ready
+</script>
+</body>
+</html>

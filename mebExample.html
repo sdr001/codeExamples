@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			MEB
+		</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="initial-scale=1.0, target-densitydpi=device-dpi" />
+		<!-- this is for mobile (Android) Chrome -->
+		<meta name="viewport" content="initial-scale=1.0, width=device-height">
+		<!--  mobile Safari, FireFox, Opera Mobile  -->
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+		<link rel="stylesheet" href="my.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="build/jquery.signaturepad.css">
+		<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,200' rel='stylesheet' type='text/css'>
+		<script src="libs/modernizr.js"></script>
+		<style type="text/css">
+			/* App custom styles */
+			video {
+			width: 100%;
+			height: auto;
+			}
+			.ui-field-contain .ui-btn.ui-submit{
+			width:100%;
+			}
+			.ui-bar-a a.ui-link:visited {
+			color: white;
+			}
+			#mapPhoto {
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			border-radius: 10px; /* future proofing */
+			-khtml-border-radius: 10px; /* for old Konqueror browsers */
+			}
+			#twitterPic {
+			padding: 0px 20px;
+			}
+			.ui-page {
+			background: transparent;
+			font-family: 'Titillium Web', sans-serif;
+			}
+			.ui-content{
+			background: transparent;
+			}
+			#socialImages{background: #222222; /* Old browsers */
+			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzIyMjIyMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ5JSIgc3RvcC1jb2xvcj0iIzc3Nzc3NyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyMjIyMjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-linear-gradient(left,  #222222 0%, #777777 49%, #222222 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, right top, color-stop(0%,#222222), color-stop(49%,#777777), color-stop(100%,#222222)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(left,  #222222 0%,#777777 49%,#222222 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(left,  #222222 0%,#777777 49%,#222222 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(left,  #222222 0%,#777777 49%,#222222 100%); /* IE10+ */
+			background: linear-gradient(to right,  #222222 0%,#777777 49%,#222222 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222222', endColorstr='#222222',GradientType=1 ); /* IE6-8 */
+			margin:0px 0px 25px 0px;
+			}
+			#signatureparent {
+			color:darkblue;
+			background-color:darkgrey;
+			/*max-width:600px;*/
+			padding:10px;
+			}
+			/*This is the div within which the signature canvas is fitted*/
+			#signature {
+			border: 2px dotted black;
+			background-color:white;
+			height:7em
+			}
+			/* Drawing the 'gripper' for touch-enabled devices */ 
+			html.touch #content {
+			float:left;
+			width:92%;
+			}
+			html.touch #scrollgrabber {
+			float:right;
+			width:4%;
+			margin-right:2%;
+			background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)
+			}
+			html.borderradius #scrollgrabber {
+			border-radius: 1em;
+			}
+			@font-face {
+			font-family: WendyMedium;
+			src: url(‘journal.ttf’);
+			}
+			#frontImage {
+			margin:20px 0px 25px 0px;
+			-webkit-border-radius: 10px;
+			-khtml-border-radius: 10px;	
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			}
+			.h_iframe        {position:relative;}
+			.h_iframe .ratio {display:block;width:100%;height:auto;}
+			.h_iframe iframe {position:absolute;top:0;left:0;width:100%; height:100%;}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+		<script src="my.js"></script>
+	</head>
+	<body>
+		<!-- HOME -->
+		<div data-role="page" id="page1" data-theme="a" >
+			<div data-role="content">
+				<div style="">
+					<center>
+						<img style="width: 196px height: 91px" src="MEB-logo.png" />
+					</center>
+				</div>
+				<ul data-role="listview" data-divider-theme="d" data-inset="true">
+					<li data-role="list-divider" role="heading">
+						Home
+					</li>
+					<li data-theme="c">
+						<a href="#about" data-transition="pop">
+						About
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#camps" data-transition="pop">
+						Satellite Camps
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#contact" data-transition="pop">
+						Contact
+						</a>
+					</li>
+					<li data-theme="c">
+						<a href="#register" data-transition="pop">
+						Register
+						</a>
+					</li>
+				</ul>
+				<div style="">
+					<center>
+						<img id="frontImage" style="width: 100%; height: 200px" src="image_07_large.jpg" />
+					</center>
+				</div>
+				<div id="socialImages">
+					<center>
+						<a href="http://www.facebook.com/pages/Midwest-Elite-Basketball/6804530431?fref=ts">
+						<img src="facebook_dark.png" /></a>
+						<a href="https://twitter.com/MidwestEliteBB">
+						<img id="twitterPic" src="twitter_dark.png" />
+						</a>
+						</ceneter>
+				</div>
+			</div>
+			<div data-theme="a" data-role="footer" data-position="fixed">
+			<h3>
+			<a href="http://www.midwestelitebasketball.com"> www.midwestelitebasketball.com</a>
+			</h3>
+			</div>
+		</div>
+		<!-- ABOUT -->
+		<div data-role="page" id="about" data-theme="a" >
+		<div data-role="content">
+		<div style="">
+		<center>
+		<img style="width: 196px height: 91px" src="MEB-logo.png" />
+		</center>
+		</div>
+		<ul data-role="listview" data-divider-theme="d" data-inset="true">
+		<li data-role="list-divider" role="heading">
+		About
+		</li>
+		</ul>
+		<h2>Why Choose Midwest Elite Basketball?</h2>
+		<div class="container">
+		<iframe width="425" height="349" src="http://player.vimeo.com/video/30097663?badge=0" frameborder="0" allowfullscreen></iframe>
+		</center>
+		</div>
+		<center>
+		<h2>Jon Burt, 2-time State Champion and 5-time State Qualifying Head Boys Coach, Omaha Skutt Catholic HS, NE</h2>
+		<small>"My athletes absolutely loved the camp, especially our older players who needed some new voices and some fresh enthusiasm to get their minds right as they entered a new season. The energy the coaches exhibited and their knowledge and love of the game rubbed off on the boys and quite literally set the tone for our year to date."
+		</small>
+		<h2>
+		Jacy Halloway, Head Boys Coach, Garden City HS, KS</h2>
+		<small>"The fresh new drills and skills introduced by the MEB coaches were great.  There are a lot of advantages to bringing a camp to your school and MEB met all of my expectations.  The coaches showed great enthusiasm from start to finish!"
+		</small>
+		<br /><br />
+		<div id="socialImages">
+		<center>
+		<a href="http://www.facebook.com/pages/Midwest-Elite-Basketball/6804530431?fref=ts">
+		<img src="facebook_dark.png" /></a>
+		<a href="https://twitter.com/MidwestEliteBB">
+		<img id="twitterPic" src="twitter_dark.png" />
+		</a>
+		</ceneter>
+		</div>
+		<div data-theme="a" data-role="footer" data-position="fixed">
+		<div data-role="navbar" data-iconpos="top">
+		<ul>
+		<li>
+		<a href="javascript:history.go(-1)" data-theme="">
+		Back
+		</a>
+		</li> 
+		<li>
+		<a href="tel:7128986626" data-theme="">
+		Call Us
+		</a>
+		</li>
+		</ul>
+		</div>
+		</div>
+		</div>
+		</div>
+		<!-- CONTACT -->
+		<div data-role="page" id="contact" data-theme="a" >
+			<div data-role="content">
+				<div style="">
+					<center>
+						<img style="width: 196px height: 91px" src="MEB-logo.png" />
+					</center>
+				</div>
+				<ul data-role="listview" data-divider-theme="d" data-inset="true">
+					<li data-role="list-divider" role="heading">
+						Contact Us
+					</li>
+				</ul>
+				<form action="mebContact.php" method="post" name="contact" id="contact">
+					<div>
+						Name<br />
+						<input type="text" name="name" id="name" value="" placeholder=""required="required">
+						Phone<br />
+						<input type="text" name="phone" id="phone" value="" placeholder=""required="required">
+						Email<br />
+						<input type="email" name ="email" id="email" pattern="[^ @]*@[^ @]*" value="">
+						Comments<br />
+						<textarea id="textArea" name="textArea" rows="8" cols="50"></textarea>
+					</div>
+					<button type="submit">Submit</button>
+				</form>
+			</div>
+			<div data-theme="a" data-role="footer" data-position="fixed">
+				<div data-role="navbar" data-iconpos="top">
+					<ul>
+						<li>
+							<a href="javascript:history.go(-1)" data-theme="">
+							Back
+							</a>
+						</li>
+						<li>
+							<a href="tel:7128986626" data-theme="">
+							Call Us
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- CAMPS -->
+		<div data-role="page" id="camps" data-theme="a" >
+			<div data-role="content">
+				<div style="">
+					<center>
+						<img style="width: 196px height: 91px" src="MEB-logo.png" />
+					</center>
+				</div>
+				<div data-role="content">
+				</div>
+				<div data-role="content">
+					<ul data-role="listview" data-divider-theme="d" data-inset="true">
+						<li data-role="list-divider" role="heading">
+							Satellite Camps
+						</li>
+					</ul>
+					<p>
+						<img id="mapPhoto" style="width: 100%; height:350px;"src="maps.png" />
+					<ul data-role="listview" data-divider-theme="d" data-inset="true">
+						<li data-role="list-divider" role="heading">
+							Prices
+						</li>
+					</ul>
+					<center>
+						<div class="ui-grid-b">
+							<div class="ui-block-a">
+								<h3>1-Day Satellite Camps</h3>
+								$60/Camper<br /><br />
+								<small>Individual Defense, Offense, & Shooting Instruction<br />
+								Emphasis on Perimeter, Post, and Point Play<br />
+								Team Transition, Rebounding, & Defensive Drills<br />
+								College Instruction, Lectures, and Demonstrations<br />
+								Athletes will communicate better and become better leaders<br /><br />
+								Each Camper receives the MEB Silicone Gel Band<br /></small>
+							</div>
+							<div class="ui-block-b">
+								<h3>2-Day Satellite Camps</h3>
+								$95/Camper<br /><br />
+								<small>
+									5-Hour Camp Days<br />
+									2 Day Progression on Skills and Drills<br />
+									Includes Everything in the 1-Day Camp<br />
+									PLUS:<br />
+									<h4>Jump Shot Analysis:</h4>
+									Each camper's jump shot is video-taped critiqued and shown to the athlete.
+								</small>
+							</div>
+							<div class="ui-block-c">
+								<h3>3-Day Satellite Camps</h3>
+								$125/Camper<br /><br />
+								<small>
+									90% of MEB Camps have been 3-Day Camps<br />
+									5-Hour Camp Days<br />
+									3-Day Progression on Skills and Drills<br />
+									Includes Everything in the 1-Day and 2-Day Camps<br />
+									<h4>PLUS:</h4>
+									Player Evaluation Notebooks: 
+									Each athlete receives an evaluation notebook which includes drills, court workouts, a jump-training program, and a report card from camp.<br />
+								</small>
+							</div>
+						</div>
+						<!-- /grid-b -->
+				</div>
+				</center>
+				<div data-theme="a" data-role="footer" data-position="fixed">
+					<div data-role="navbar" data-iconpos="top">
+						<ul>
+							<li>
+								<a href="javascript:history.go(-1)" data-theme="">
+								Back
+								</a>
+							</li>
+							<li>
+								<a href="tel:7128986626" data-theme="">
+								Call Us
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- REGISTER -->
+		<div data-role="page" id="register" data-theme="a" >
+			<div data-role="content">
+				<div style="">
+					<center>
+						<img style="width: 196px height: 91px" src="MEB-logo.png" />
+					</center>
+				</div>
+				<ul data-role="listview" data-divider-theme="d" data-inset="true">
+					<li data-role="list-divider" role="heading">
+						Register for a Satellite Camp
+					</li>
+				</ul>
+				<script>
+					/*
+					 See the full details here: 
+					 http://www.snipe.net/2012/02/jquery-mobile-add-remove-fields-dynamically/
+					
+					Based on the great post by Charlie Griefer, available here:
+					http://charlie.griefer.com/blog/2009/09/17/jquery-dynamically-adding-form-elements/
+					
+					*/
+					
+					
+					$(document).ready(function() {
+					             
+					   
+					    $('#btnAdd').click( function() {
+					         
+					        $('#btnDel').removeAttr('disabled').button('enable');	// enable the "del" button
+					        
+					        // how many "duplicatable" input fields we currently have
+					        var num = $('.clonedInput').length;	
+					        
+					        // the numeric ID of the new input field being added	
+					        var newNum	= new Number(num + 1);		
+					        var newElem = $('#input' + num ).clone().attr('id', 'input' + newNum);
+					                                 
+					        newElem.children(':first').attr( 'id', 'name' + newNum ).attr('name', 'name_label[]');
+					        $('#input' + num).after(newElem);
+					        
+					        
+					        // business rule: limit the number of fields to 5
+					        if (newNum == 5) {
+					             $('#btnAdd' ).attr('disabled', 'disabled').button('disable');
+					             $('#btnAdd').parent().find('.ui-btn-text').text('maximum fields reached');
+					        }                        
+					    });
+					
+					    $( '#btnDel' ).click( function() {
+					        // how many "duplicatable" input fields we currently have           
+					        var num = $( '.clonedInput' ).length;	
+					        
+					        // remove the last element	
+					        $('#input' + num ).remove();
+					        
+					        // enable the "add" button, since we've removed one				
+					        $('#btnAdd').removeAttr('disabled').button('enable');	
+					        $('#btnAdd').parent().find('.ui-btn-text').text('add another name');
+					        
+					        // if only one element remains, disable the "remove" button
+					        if ( num-1 == 1 )
+					        $('#btnDel' ).attr('disabled', 'disabled').button('disable');
+					
+					    });  
+					   
+					});           
+				</script>  
+				<!-- Here is the form -->
+				<form action="mail.php" method="post" name="myform" id="myform">
+					<div id="indiDIV">
+						Name<br />
+						<input type="text" name="name" id="name" value="" placeholder=""required="required">
+						Address<br />
+						<input type="text" name="addr" id="addr" value="" placeholder=""required="required">
+						City<br />
+						<input type="text" name="city" id="city" value="" placeholder=""required="required">
+						State<br />
+						<input type="text" name="state" id="state" value="" placeholder=""required="required">
+						Zip<br />
+						<input type="text" name="zip" id="zip" value="" placeholder=""required="required">
+						Phone<br />
+						<input type="text" name="phone" id="phone" value="" placeholder=""required="required">
+						Email<br />
+						<input type="email" name ="email" id="email" pattern="[^ @]*@[^ @]*" value="">
+						Grade<br />
+						<input type="text" name="grade" id="grade" value="" placeholder=""required="required">
+						<!-- Home -->
+						<div id="checkboxes1" data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-type="vertical">
+								<legend>
+									Position(s)
+								</legend>
+								<input id="checkbox1" name="check_list[]" type="checkbox" value="PointGuard">
+								<label for="checkbox1">
+								Point Guard
+								</label>
+								<input id="checkbox2" name="check_list[]" type="checkbox" value="ShootingGuard">
+								<label for="checkbox2">
+								Shooting Guard
+								</label>
+								<input id="checkbox3" name="check_list[]" type="checkbox" value="SmallForward">
+								<label for="checkbox3">
+								Small Forward
+								</label>
+								<input id="checkbox4" name="check_list[]" type="checkbox" value="PowerForward">
+								<label for="checkbox4">
+								Power Forward
+								</label>
+								<input id="checkbox5" name="check_list[]" type="checkbox" value="Center">
+								<label for="checkbox5">
+								Center
+								</label>
+							</fieldset>
+							<br />
+							<div class="sigPad" >
+								<p >Draw your signature</p>
+								<ul class="sigNav">
+									<li class="clearButton"><a href="#clear">Clear</a></li>
+								</ul>
+								<div class="sig sigWrapper">
+									<div class="typed"></div>
+									<canvas id="canvas" class="pad" width="600" height="400"></canvas>
+									<input type="hidden" name="output" class="output">
+								</div>
+							</div>
+							<button type="submit">Register</button>
+				</form>
+				</div>
+				<script src="build/jquery.signaturepad.min.js"></script>
+				<script>
+					$(document).ready(function() {
+					  $('.sigPad').signaturePad({drawOnly:true, lineTop:395});
+					});
+				</script>
+				<script src="build/json2.min.js"></script>
+				</div>
+			</div>
+			<div data-theme="a" data-role="footer" data-position="fixed">
+				<div data-role="navbar" data-iconpos="top">
+					<ul>
+						<li>
+							<a href="javascript:history.go(-1)" data-theme="">
+							Back
+							</a>
+						</li>
+						<li>
+							<a href="tel:7128986626" data-theme="">
+							Call Us
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function showHide() {
+			  var div = document.getElementById("test");
+			  if (div.style.display == 'none') {
+			    div.style.display = '';
+			  }
+			  else {
+			    div.style.display = 'none';
+			  }
+			}
+		</script>
+		<script src="jquery.fitvids.js"></script>
+		<script>
+			// Basic FitVids Test
+			$(".container").fitVids();
+		</script>
+	</body>
+</html>
