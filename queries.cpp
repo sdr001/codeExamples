@@ -1,8 +1,8 @@
 /*****************************************************************
-viewWhiteboard.cpp
+queries.cpp
 Written By: Sean Richardson
 
-View someone else's personal whiteboard
+Queries Interface
 ******************************************************************/
 
 #include <iostream>
